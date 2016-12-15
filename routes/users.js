@@ -28,6 +28,20 @@ function resError(res, statusCode, message) {
     });
 }
 
-
+router.get('/:id/degree', function(req, res){
+  if (!isNaN(req.params.id)) {
+      queries.getDegreeByUser(req.params.id)
+          .then(degree => {
+            console.log(degree);
+              if (degree.length > 0) {
+                  res.json(degree);
+              } else {
+                  resError(res, 404, 'No Degrees, get learnt!');
+              }
+          });
+  } else {
+      resError(res, 500, 'Use a valid ID!');
+  }
+})
 
 module.exports = router;
